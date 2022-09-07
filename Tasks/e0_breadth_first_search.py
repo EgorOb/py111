@@ -1,6 +1,6 @@
 from typing import Hashable, List
 import networkx as nx
-
+from Tasks.a1_my_queue import Queue
 
 def bfs(g: nx.Graph, start_node: Hashable) -> List[Hashable]:
     """
@@ -11,4 +11,38 @@ def bfs(g: nx.Graph, start_node: Hashable) -> List[Hashable]:
     :return: list of nodes in the visited order
     """
     print(g, start_node)
-    return list(g.nodes)
+    q = Queue()
+    node = start_node
+    path = []
+
+    while True:
+        if node not in path:
+            path.append(node)
+            for neig in g.neighbors(node):
+                if neig not in path and neig not in q.data:
+                    q.enqueue(neig)
+
+        node = q.dequeue()
+        if node is None:
+            return path
+
+
+if __name__ == "__main__":
+    graph = nx.Graph()
+    graph.add_nodes_from("ABCDEFGHIJ")
+    graph.add_edges_from([
+        ('A', 'B'),
+        ('A', 'F'),
+        ('B', 'G'),
+        ('F', 'G'),
+        ('G', 'C'),
+        ('G', 'H'),
+        ('G', 'I'),
+        ('C', 'H'),
+        ('I', 'H'),
+        ('H', 'D'),
+        ('H', 'E'),
+        ('H', 'J'),
+        ('E', 'D'),
+    ])
+    print(bfs(graph, 'A'))

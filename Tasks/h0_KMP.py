@@ -9,7 +9,15 @@ def _prefix_fun(prefix_str: str) -> List[int]:
     :return: prefix values table
     """
     print(prefix_str)
-    return []
+    v = [0] * len(prefix_str)
+    for i in range(1, len(prefix_str)):
+        k = v[i - 1]
+        while k > 0 and prefix_str[k] != prefix_str[i]:
+            k = v[k - 1]
+        if prefix_str[k] == prefix_str[i]:
+            k = k + 1
+        v[i] = k
+    return v
 
 
 def kmp_algo(inp_string: str, substr: str) -> Optional[int]:
@@ -21,5 +29,22 @@ def kmp_algo(inp_string: str, substr: str) -> Optional[int]:
     :return: index where first occurrence of substr in inp_string started or None if not found
     """
 
+    index = None
+    f = _prefix_fun(substr)
+    k = 0
+    for i in range(len(inp_string)):
+        while k > 0 and substr[k] != inp_string[i]:
+            k = f[k - 1]
+        if substr[k] == inp_string[i]:
+            k = k + 1
+        if k == len(substr):
+            index = i - len(substr) + 1
+            break
+
     print(inp_string, substr, _prefix_fun)
-    return None
+    return index
+
+
+if __name__ == "__main__":
+    # print(_prefix_fun("abcdabcabcdabcdab"))
+    print(kmp_algo(inp_string='abcabcdabcdabdcdab', substr='abcdabd'))

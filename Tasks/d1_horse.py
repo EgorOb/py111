@@ -17,13 +17,11 @@ def calculate_paths(shape: (int, int), point: (int, int), start_point=(1, 1)) ->
     print(shape, point)
     table = [[0 for i in range(shape[1])] for i in range(shape[0])]
     table[start_point[0]][start_point[1]] = 1
-    not_avaible = [[0 for i in range(shape[1])] for i in range(shape[0])]
-    not_avaible[start_point[0]][start_point[1]] = 1
 
     def path_rec(i: int, j: int) -> int:
 
         if 0 <= i <= shape[0] - 1 and 0 <= j <= shape[1] - 1:
-            if not_avaible[i][j]:
+            if table[i][j]:
                 return table[i][j]
             # print((i + 1, j - 2), (i - 1, j - 2), (i - 2, j - 1), (i - 2, j + 1))
             table[i][j] = sum((path_rec(i + 1, j - 2),
@@ -31,7 +29,6 @@ def calculate_paths(shape: (int, int), point: (int, int), start_point=(1, 1)) ->
                                path_rec(i - 2, j - 1),
                                path_rec(i - 2, j + 1),
                                ))
-            not_avaible[i][j] = 1
             return table[i][j]
 
         return 0
@@ -91,16 +88,16 @@ def calculate_paths_all_way(shape: (int, int), point: (int, int), start_point=(1
         way.pop()
         return 0
 
-    path_rec(*point)
-    return table
+    return path_rec(*point)
 
 
 if __name__ == "__main__":
-    print(calculate_paths((8, 8), (7, 7)))
-    print(calculate_paths((7, 15), (6, 14), (0, 0)))
-    print(calculate_paths((17, 12), (16, 9), (1, 1)))
-    print(calculate_paths_all_way((4, 4), (3, 3)))
-    print(calculate_paths_all_way((8, 8), (7, 7)))
-    print(calculate_paths_all_way((7, 15), (6, 14), (1, 1)))
-    print(calculate_paths_all_way((17, 12), (16, 9), (1, 1)))
+    assert calculate_paths((8, 8), (7, 7)) == 228
+    assert calculate_paths((7, 15), (6, 14), (0, 0)) == 13309
+    assert calculate_paths((7, 15), (6, 14)) == 12513
+    assert calculate_paths((17, 12), (16, 9)) == 4544454
+    # print(calculate_paths_all_way((4, 4), (3, 3)))
+    # print(calculate_paths_all_way((8, 8), (7, 7)))
+    # print(calculate_paths_all_way((7, 15), (6, 14), (1, 1)))
+    # print(calculate_paths_all_way((17, 12), (16, 9), (1, 1)))
 

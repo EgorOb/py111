@@ -27,7 +27,7 @@ def stairway_path_r(stairway: Sequence[Union[float, int]]) -> Union[float, int]:
     cost[0] = stairway[0]
     cost[1] = stairway[1]
 
-    def rec(n: int):
+    def rec(n: int) -> Union[float, int]:
         if cost[n] != '':
             return cost[n]
         if n < 2:
@@ -43,3 +43,8 @@ if __name__ == '__main__':
     test_st = [1, 3, 1, 5, 2, 7, 7, 8, 9, 4, 6, 3]
     print(stairway_path(test_st))
     print(stairway_path_r(test_st))
+    test_st = [1, 3, 5, 1, 7, 7, 2, 8, 9, 4, 6, 3]
+    print(stairway_path(test_st))
+    print(stairway_path_r(test_st))
+
+

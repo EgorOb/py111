@@ -36,7 +36,7 @@ def kmp_algo(inp_string: str, substr: str) -> Optional[int]:
     for i in range(l_input):
         if pref[l_sub + i + 1] == l_sub:
             answer.append(i + 1 - l_sub)
-    print(inp_string, substr, _prefix_fun)
+    print(inp_string, substr, pref)
 
     if answer:
         return answer[0]

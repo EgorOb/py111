@@ -11,9 +11,6 @@ class BinarySearchTree:
     def __init__(self):
         self.tree = {'node': {}}
 
-        self.head_key_node = None
-        self.current_key_node = None
-
     def insert(self, key: int, value: Any) -> None:
         """
         Insert (key, value) pair to binary search tree
